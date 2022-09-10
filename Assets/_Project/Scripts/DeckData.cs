@@ -1,9 +1,12 @@
+using Newtonsoft.Json.Linq;
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.ReorderableList.Element_Adder_Menu;
 using UnityEngine;
 using UnityEngine.Rendering.VirtualTexturing;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 public class CardData
@@ -12,49 +15,35 @@ public class CardData
     public string rank;
     public string element;
     public string color; 
-    public int bonus;
-    
-}
+     
+} 
   
 public class DeckData : MonoBehaviour
-{
+{ 
     [Header("Deck Settings")]
     [Space]
-    [SerializeField]
-    private int NumberLength = 10;
-    [SerializeField]
-    private String[] Rank = { "F", "W", "E", "T", "B" };
-    [SerializeField]
-    private String[] Element = { "Fire", "Water", "Earth", "Thunder", "Dark" };
-    [SerializeField]
-    private String[] Color = { "Red", "Blue", "Brown", "Yellow", "Black" };
+    public DeckSettings DeckProperty;
 
     [Header("Deck Card")]
     [Space]
     [SerializeField]
     private List<CardData> AllCard = new List<CardData>();
-
-    // Start is called before the first frame update
+     
     void Start()
     {
-        CardLoad(AllCard);
+        CardLoad(AllCard); 
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    } 
+     
     public void CardLoad(List<CardData> cardlist)
     { 
-        for (int j = 0; j < Element.Length; j++)
+        for (int j = 0; j < DeckProperty.Element.Length; j++)
         {
-            for (int k = 0; k < Color.Length; k++)
+            for (int k = 0; k < DeckProperty.Color.Length; k++)
             {
-                for (int i = 1; i <= NumberLength + Rank.Length; i++)
+                for (int i = 1; i <= DeckProperty.NumberLength + DeckProperty.Rank.Length; i++)
                 {
                     CardData card = new CardData();
-                    if (i <= NumberLength)
+                    if (i <= DeckProperty.NumberLength)
                     {
                         card.number = i;
                         card.rank = "N";
@@ -62,25 +51,35 @@ public class DeckData : MonoBehaviour
                     else
                     {
                         card.number = 0;
-                        card.rank = Rank[i - (NumberLength + 1)];
+                        card.rank = DeckProperty.Rank[i - (DeckProperty.NumberLength + 1)];
                     }
 
-                    card.element = Element[j];
-                    card.color = Color[k];
+                    card.element = DeckProperty.Element[j];
+                    card.color = DeckProperty.Color[k];
 
                     cardlist.Add(card);
 
                 }
             }
         }
+          
+    }
+    public void ShuffleCards(List<CardData> cardlist)
+    {  
+        for (int i = 0; i < cardlist.Count; i++)
+        {
+            var CardData = cardlist[i];
+            int randomIndex = Random.Range(i, cardlist.Count);
 
-        
-         
+            cardlist[i] = cardlist[randomIndex];
+            cardlist[randomIndex] = CardData;
 
+        }
     }
 
-
-
-
+    public void ClearCard()
+    {
+        AllCard.Clear();
+    }
 
 }

@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Uimanager : MonoBehaviour
+public class UiManager : MonoBehaviour
 {
     [SerializeField]
     private Object Profile;

@@ -8385,6 +8385,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1151221885}
   - component: {fileID: 1151221886}
+  - component: {fileID: 1151221887}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -8419,13 +8420,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c38dbe70d362c894ea2c84820a34b462, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DeckProperty: {fileID: 1151221887}
+  AllCard: []
+--- !u!114 &1151221887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151221884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc6f4ff4376b7c7439493074b7c394a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   NumberLength: 10
   Rank:
   - F
   - W
   - E
   - T
-  - D
+  - B
   Element:
   - Fire
   - Water
@@ -8438,7 +8453,6 @@ MonoBehaviour:
   - Brown
   - Yellow
   - Black
-  AllCard: []
 --- !u!1 &1155789105
 GameObject:
   m_ObjectHideFlags: 0
