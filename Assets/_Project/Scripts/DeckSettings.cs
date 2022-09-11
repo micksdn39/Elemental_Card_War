@@ -9,4 +9,6 @@ public class DeckSettings : MonoBehaviour
     public String[] Rank = { "F", "W", "E", "T", "B" };
     public String[] Element = { "Fire", "Water", "Earth", "Thunder", "Dark" };
     public String[] Color = { "Red", "Blue", "Brown", "Yellow", "Black" };
+    public int GetLengthElement { get { return Element.Length; } }
+ 
 }

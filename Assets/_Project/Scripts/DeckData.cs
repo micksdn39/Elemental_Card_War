@@ -1,11 +1,8 @@
-using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting.ReorderableList.Element_Adder_Menu;
-using UnityEngine;
-using UnityEngine.Rendering.VirtualTexturing;
+using System.Collections.Generic; 
+using UnityEngine; 
 using Random = UnityEngine.Random;
 
 [System.Serializable]
@@ -27,14 +24,16 @@ public class DeckData : MonoBehaviour
     [Header("Deck Card")]
     [Space]
     [SerializeField]
-    private List<CardData> AllCard = new List<CardData>();
+    private List<CardData> MyDeck = new List<CardData>();
+    public int getCurrentCardCount { get { return MyDeck.Count; } }
      
     void Start()
     {
-        CardLoad(AllCard); 
+        CardLoad(MyDeck);
+        ShuffleCards(MyDeck); 
     }
      
-    public void CardLoad(List<CardData> cardlist)
+    private void CardLoad(List<CardData> cardlist)
     { 
         for (int j = 0; j < DeckProperty.Element.Length; j++)
         {
@@ -64,7 +63,7 @@ public class DeckData : MonoBehaviour
         }
           
     }
-    public void ShuffleCards(List<CardData> cardlist)
+    private void ShuffleCards(List<CardData> cardlist)
     {  
         for (int i = 0; i < cardlist.Count; i++)
         {
@@ -79,7 +78,20 @@ public class DeckData : MonoBehaviour
 
     public void ClearCard()
     {
-        AllCard.Clear();
+        MyDeck.Clear();
+        CardLoad(MyDeck);
+        ShuffleCards(MyDeck); 
+    }
+    public CardData DealCardOnTop()
+    {
+        CardData CardData = new CardData();
+        CardData = MyDeck[0];
+        MyDeck.RemoveAt(0);
+        return CardData;
     }
 
+    public DeckSettings GetDeckSettings()
+    {
+        return DeckProperty;
+    }
 }
