@@ -76,7 +76,7 @@ public class DeckData : MonoBehaviour
         }
     }
 
-    public void ClearCard()
+    public void ClearDeck()
     {
         MyDeck.Clear();
         CardLoad(MyDeck);

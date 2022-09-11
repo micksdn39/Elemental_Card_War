@@ -1438,6 +1438,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerName: 
   PlayerProfileImage: {fileID: 0}
+  LimitCardFirstDeal: 0
+  LimitCardInHand: 0
   LifePoint: 4
   Element: 
   DeckinHand: []
@@ -1685,6 +1687,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerName: 
   PlayerProfileImage: {fileID: 0}
+  LimitCardFirstDeal: 0
+  LimitCardInHand: 0
   LifePoint: 4
   Element: 
   DeckinHand: []
@@ -2367,6 +2371,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerName: 
   PlayerProfileImage: {fileID: 0}
+  LimitCardFirstDeal: 0
+  LimitCardInHand: 0
   LifePoint: 4
   Element: 
   DeckinHand: []
@@ -8490,6 +8496,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerName: 
   PlayerProfileImage: {fileID: 0}
+  LimitCardFirstDeal: 0
+  LimitCardInHand: 0
   LifePoint: 2
   Element: 
   DeckinHand: []
@@ -8753,7 +8761,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeckProperty: {fileID: 1151221887}
-  AllCard: []
+  MyDeck: []
 --- !u!114 &1151221887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8800,7 +8808,6 @@ MonoBehaviour:
   Player: {fileID: 0}
   PlayerGroup: []
   Deck: {fileID: 1151221886}
-  DeckSettings: {fileID: 1151221887}
 --- !u!1 &1155789105
 GameObject:
   m_ObjectHideFlags: 0
@@ -13058,6 +13065,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerName: Player
   PlayerProfileImage: {fileID: 21300000, guid: 2f03b71b651d48e4fa5838395110532a, type: 3}
+  LimitCardFirstDeal: 0
+  LimitCardInHand: 0
   LifePoint: 0
   Element: 
   DeckinHand: []
@@ -14583,6 +14592,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerName: 
   PlayerProfileImage: {fileID: 0}
+  LimitCardFirstDeal: 0
+  LimitCardInHand: 0
   LifePoint: 4
   Element: 
   DeckinHand: []
