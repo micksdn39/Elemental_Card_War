@@ -86,8 +86,11 @@ public class DeckData : MonoBehaviour
     {
         CardData CardData = new CardData();
         CardData = MyDeck[0];
-        MyDeck.RemoveAt(0);
         return CardData;
+    }
+    public void RemoveCardOnTop()
+    { 
+        MyDeck.RemoveAt(0);
     }
 
     public DeckSettings GetDeckSettings()

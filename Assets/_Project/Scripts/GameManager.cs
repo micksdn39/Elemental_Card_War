@@ -16,8 +16,21 @@ public class GameManager : MonoBehaviour
 
     public void PlayTurn()
     {
-        DealCard(PlayerGroup[0].GetComponent<Profile>());
- 
+        var cardfirstdeal = 0;
+        foreach (var player in PlayerGroup)
+        {
+            var highCardcandeal = player.GetComponent<Profile>().LimitCardFirstDeal;
+            if (cardfirstdeal < highCardcandeal)
+                cardfirstdeal = highCardcandeal;
+        }
+
+        for (int i = 0; i < cardfirstdeal; i++)
+        {
+            foreach (var player in PlayerGroup)
+            {
+                DealCard(player.GetComponent<Profile>());
+            }
+        }
     }
     public void DrawCard()
     {
@@ -25,9 +38,13 @@ public class GameManager : MonoBehaviour
     }
       
     private void DealCard(Profile player)
-    {  
-        player.addCard(Deck.DealCardOnTop());
-      
+    {
+        if (player.LimitCardInHand > player.getDeckCount)
+        { 
+            player.addCard(Deck.DealCardOnTop());
+            Deck.RemoveCardOnTop();
+        }
+         
     }
 
     private void SetElementPlayerGroup()

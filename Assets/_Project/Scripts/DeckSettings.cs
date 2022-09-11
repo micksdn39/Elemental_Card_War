@@ -11,40 +11,24 @@ public class DeckSettings : MonoBehaviour
     public String[] Color = { "Red", "Blue", "Brown", "Yellow", "Black" };
     public int GetLengthElement { get { return Element.Length; } }
 
-    public List<CardData> CompareHighScore(Profile player)
+    public (List<CardData>,float) CompareHighScore(Profile player)
     {
         List<CardData> list = new List<CardData>();
-        float temp = 0;
+        float HighScore = 0;
         
         for (int i = 0; i < player.getDeckCount-1; i++)
         {
            var value = CompareScore(player.getElement,player.getDeck[i], player.getDeck[i + 1]);
-            if (temp > value)
+            if (HighScore > value)
             {
                 list.Clear();
                 list.Add(player.getDeck[i]);
                 list.Add(player.getDeck[i + 1]);
+                HighScore = value;
             } 
-        } 
-
-        return list;
-    }
-    private float CompareScore(string element,CardData cardA, CardData cardB)
-    {
-        float bonus = 0;
-        if(WinCard(cardA)==true && WinCard(cardB)==true)
-        {
-            var score = cardA.number + cardB.number;
-            bonus -= score;
-            return bonus;
         }
-        bonus += BonusOneCardCal(cardA);
-        bonus += BonusElementWithPlayerAfterCalculate(cardA,element);
-        bonus += BonusOneCardCal(cardB);
-        bonus += BonusElementWithPlayerAfterCalculate(cardB,element);
-        bonus += BonusTwoCardAfterCalculate(cardA, cardB);
-
-        return bonus;
+         
+        return new (list,HighScore);
     }
     public bool WinCard(CardData card)
     {
@@ -78,6 +62,24 @@ public class DeckSettings : MonoBehaviour
 
         return false;
     }
+    private float CompareScore(string element,CardData cardA, CardData cardB)
+    {
+        float bonus = 0;
+        if(WinCard(cardA)==true && WinCard(cardB)==true)
+        {
+            var score = cardA.number + cardB.number;
+            bonus -= score;
+            return bonus;
+        }
+        bonus += BonusOneCardCal(cardA);
+        bonus += BonusElementWithPlayerAfterCalculate(cardA,element);
+        bonus += BonusOneCardCal(cardB);
+        bonus += BonusElementWithPlayerAfterCalculate(cardB,element);
+        bonus += BonusTwoCardAfterCalculate(cardA, cardB);
+
+        return bonus;
+    }
+
     private float BonusOneCardCal(CardData card)
     {
         float Bonus = 0;

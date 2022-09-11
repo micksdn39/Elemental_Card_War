@@ -1438,8 +1438,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerName: 
   PlayerProfileImage: {fileID: 0}
-  LimitCardFirstDeal: 0
-  LimitCardInHand: 0
+  LimitCardFirstDeal: 3
+  LimitCardInHand: 3
   LifePoint: 4
   Element: 
   DeckinHand: []
@@ -1687,8 +1687,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerName: 
   PlayerProfileImage: {fileID: 0}
-  LimitCardFirstDeal: 0
-  LimitCardInHand: 0
+  LimitCardFirstDeal: 3
+  LimitCardInHand: 3
   LifePoint: 4
   Element: 
   DeckinHand: []
@@ -2371,8 +2371,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerName: 
   PlayerProfileImage: {fileID: 0}
-  LimitCardFirstDeal: 0
-  LimitCardInHand: 0
+  LimitCardFirstDeal: 3
+  LimitCardInHand: 3
   LifePoint: 4
   Element: 
   DeckinHand: []
@@ -8496,8 +8496,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerName: 
   PlayerProfileImage: {fileID: 0}
-  LimitCardFirstDeal: 0
-  LimitCardInHand: 0
+  LimitCardFirstDeal: 3
+  LimitCardInHand: 3
   LifePoint: 2
   Element: 
   DeckinHand: []
@@ -13065,8 +13065,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerName: Player
   PlayerProfileImage: {fileID: 21300000, guid: 2f03b71b651d48e4fa5838395110532a, type: 3}
-  LimitCardFirstDeal: 0
-  LimitCardInHand: 0
+  LimitCardFirstDeal: 5
+  LimitCardInHand: 7
   LifePoint: 0
   Element: 
   DeckinHand: []
@@ -14592,8 +14592,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerName: 
   PlayerProfileImage: {fileID: 0}
-  LimitCardFirstDeal: 0
-  LimitCardInHand: 0
+  LimitCardFirstDeal: 3
+  LimitCardInHand: 3
   LifePoint: 4
   Element: 
   DeckinHand: []

@@ -22,13 +22,13 @@ public class Profile : MonoBehaviour
     protected List<CardData> DeckinHand = new List<CardData>();
     public int getDeckCount { get { return DeckinHand.Count; } }
     public List<CardData> getDeck { get { return DeckinHand; } }
+     
     public void setElement(string element)
     {
         Element = element;
     }
     public void addCard(CardData card)
-    {
-        if (LimitCardInHand > DeckinHand.Count) 
+    {  
             DeckinHand.Add(card); 
     }
     
