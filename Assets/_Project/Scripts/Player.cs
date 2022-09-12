@@ -5,13 +5,18 @@ using UnityEngine.UI;
 
 public class Player : Profile
 {   
-    public void DrawCardMore(CardData card)
+    public bool CanDraw()
     {
-        if(LifePoint > 1 && DeckinHand.Count < LimitCardInHand)
+        if (LifePoint > 1 && DeckinHand.Count < LimitCardInHand)
         {
-            DeckinHand.Add(card);
-            LifePoint--;
-        } 
+            return true;
+        }
+        return false;
+    }
+    public void DrawCardMore(CardData card)
+    { 
+            DeckinHand.Add(card); 
+            LifePoint--; 
     }
 
 }

@@ -32,9 +32,13 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    public void DrawCard()
+    public void DrawCard(Player player)
     {
-        Player.DrawCardMore(Deck.DealCardOnTop()); 
+        if (player.CanDraw())
+        {
+            Player.DrawCardMore(Deck.DealCardOnTop());
+            Deck.RemoveCardOnTop();
+        }
     }
       
     private void DealCard(Profile player)
@@ -54,8 +58,7 @@ public class GameManager : MonoBehaviour
             var DeckSettings = Deck.GetDeckSettings();
             var elementRandom = Random.Range(0, DeckSettings.GetLengthElement);
             Debug.Log(elementRandom);
-            player.GetComponent<Profile>()
-                .setElement(DeckSettings.Element[elementRandom]);
+            player.GetComponent<Profile>().getElement = DeckSettings.Element[elementRandom];
         }
 
     }
