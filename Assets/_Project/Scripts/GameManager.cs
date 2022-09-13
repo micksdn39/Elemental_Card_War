@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public Player Player;
     public GameObject[] PlayerGroup;
     public DeckData Deck;
+    public Transform GameOver;
 
     public UnityEvent PlayTurnEvent;
     public UnityEvent DropEvent;
@@ -84,6 +85,10 @@ public class GameManager : MonoBehaviour
             return;
         }
         HighScorePlayer(); 
+        if(Player.getScore<=0)
+        {
+            GameOver.gameObject.SetActive(true);
+        }
     } 
 
     private void HighScorePlayer()
