@@ -1,11 +1,8 @@
-using System;
-using System.Collections;
+using System; 
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
+using System.Linq; 
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.Events; 
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour

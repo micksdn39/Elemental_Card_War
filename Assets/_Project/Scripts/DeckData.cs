@@ -4,6 +4,13 @@ using System.Collections;
 using System.Collections.Generic; 
 using UnityEngine; 
 using Random = UnityEngine.Random;
+using System.IO;
+using UnityEngine.Playables;
+using Newtonsoft.Json;
+using System.Runtime.Serialization.Json;
+using Unity.VisualScripting;
+using static UnityEditor.Progress;
+using Unity.VisualScripting.FullSerializer;
 
 [System.Serializable]
 public class CardData
@@ -28,8 +35,12 @@ public class DeckData : MonoBehaviour
      
     void Start()
     {
-        CardLoad(MyDeck);
-        ShuffleCards(MyDeck); 
+        if (File.Exists(GetFilePath(file)) == false)
+        {
+            CardLoad(MyDeck);
+            ShuffleCards(MyDeck); 
+        }
+
     }
      
     private void CardLoad(List<CardData> cardlist)
@@ -84,16 +95,70 @@ public class DeckData : MonoBehaviour
     public CardData DealCardOnTop()
     {
         CardData CardData = new CardData();
-        CardData = MyDeck[0];
+        CardData = MyDeck[0]; 
         return CardData;
     }
     public void RemoveCardOnTop()
     { 
         MyDeck.RemoveAt(0);
+
+        Save();
     }
 
     public DeckSettings GetDeckSettings()
     {
         return DeckProperty;
     }
+     
+
+    private string file = "DeckData.txt";  
+    public void Load()
+    {  
+        string json = ReadFromFIle(file);
+        var Convert = JsonConvert.DeserializeObject<List<CardData>>(json);
+        MyDeck = Convert; 
+    }
+  
+    public void Save()
+    {
+        var json = JsonConvert.SerializeObject(MyDeck,Formatting.Indented);  
+        WriteToFile(file, json);
+    }
+  
+    private void WriteToFile(string fileName, string json)
+    {
+        string path = GetFilePath(fileName);
+        FileStream fileStream = new FileStream(path, FileMode.Create);
+
+        using (StreamWriter writer = new StreamWriter(fileStream))
+        {
+            writer.Write(json);
+        }
+    }
+
+    private string ReadFromFIle(string fileName)
+    {
+        string path = GetFilePath(fileName);
+        if (File.Exists(path))
+        { 
+
+            using (StreamReader reader = new StreamReader(path))
+            {
+                string json = reader.ReadToEnd();
+                return json;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("File not found");
+        }
+
+        return "Success";
+    }
+
+    private string GetFilePath(string fileName)
+    {
+        return Application.persistentDataPath + "/" + fileName;
+    }
+
 }
