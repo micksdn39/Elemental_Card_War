@@ -11,8 +11,7 @@ public class CardData
     public int number;
     public string rank;
     public string element;
-    public string color; 
-     
+    public string color;  
 } 
   
 public class DeckData : MonoBehaviour
@@ -76,7 +75,7 @@ public class DeckData : MonoBehaviour
         }
     }
 
-    public void ClearDeck()
+    public void NewDeck()
     {
         MyDeck.Clear();
         CardLoad(MyDeck);

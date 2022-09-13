@@ -1,19 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine; 
+using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
     public Player Player;
     public GameObject[] PlayerGroup;
     public DeckData Deck; 
+
+    public UnityEvent PlayTurnEvent;
     void Start()
     {
-        Player = GameObject.Find("Player").GetComponent<Player>();
-        PlayerGroup = GameObject.FindGameObjectsWithTag("Player");
-        SetElementPlayerGroup();
-    } 
-
+        if (PlayerGroup == null) { PlayerGroup = GameObject.FindGameObjectsWithTag("Player"); }
+        if (Player == null) { Player = GameObject.Find("Player").GetComponent<Player>(); }
+        SetElementPlayerGroup();  
+    }
+    public void OnEnable()
+    {
+        if (PlayTurnEvent == null)
+        {
+            PlayTurnEvent = new UnityEvent();
+        }
+    }
     public void PlayTurn()
     {
         var cardfirstdeal = 0;
@@ -31,6 +40,7 @@ public class GameManager : MonoBehaviour
                 DealCard(player.GetComponent<Profile>());
             }
         }
+        PlayTurnEvent.Invoke();
     }
     public void DrawCard(Player player)
     {
@@ -39,6 +49,7 @@ public class GameManager : MonoBehaviour
             Player.DrawCardMore(Deck.DealCardOnTop());
             Deck.RemoveCardOnTop();
         }
+        PlayTurnEvent.Invoke();
     }
       
     private void DealCard(Profile player)

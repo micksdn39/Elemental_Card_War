@@ -5,21 +5,18 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class UiManager : MonoBehaviour
 { 
     public Profile profile;
-
-    [SerializeField]
-    public Image ProfileImage;
-    [SerializeField]
-    public TextMeshProUGUI LifePoint;
-    [SerializeField]
-    public TextMeshProUGUI Name;
-    [SerializeField]
-    public TextMeshProUGUI Elemental;
      
+    public Image ProfileImage; 
+    public TextMeshProUGUI LifePoint; 
+    public TextMeshProUGUI Name; 
+    public TextMeshProUGUI Elemental;
+    public TextMeshProUGUI Score;
     public Transform PanelCard;
     public Transform PanelDrop;
     public Object PrefabsCard;
@@ -34,9 +31,11 @@ public class UiManager : MonoBehaviour
     [SerializeField]
     private Sprite[] ElementImages;
 
+    UnityEvent PlayTurn;
+
     void Start()
     {
-        profile = this.GetComponent<Profile>(); 
+        if(profile == null) { profile = this.GetComponent<Profile>(); } 
         var profileimage = profile.PlayerProfileImage;
         ProfileImage.sprite = profileimage;
         LifePoint.text = profile.getLifePoint.ToString();
@@ -44,25 +43,40 @@ public class UiManager : MonoBehaviour
         Elemental.text = profile.getElement;
         BackCard();
     }
+    public void OnEnable()
+    {
+        PlayTurn = GameObject.Find("GameManager").GetComponent<GameManager>().PlayTurnEvent;
+        PlayTurn.AddListener(OpenCard);
+      //  GameManager.PlayTurnEvent.AddListener(OpenCard);
+    }
+    public void OnDisable()
+    {
+        PlayTurn.RemoveListener(OpenCard);
+       // GameObject.Find("GameManager").GetComponent<GameManager>().PlayTurnEvent.RemoveListener(OpenCard);
+      //  GameManager.PlayTurnEvent.RemoveListener(OpenCard);
+    }
 
     public void BackCard()
-    {
+    { 
         for (int i = 0; i < profile.getDeckCount; i++)
         {
             Instantiate(PrefabsBackCard, PanelCard);
         }
     }
     public void OpenCard()
-    { 
+    {
+        Debug.Log(this.gameObject.name);
         int count = PanelCard.transform.childCount;
-        for (int i = 0; i < count; i++)
+        if( count > 0)
         {
-            Transform child = PanelCard.transform.GetChild(i);
-            Destroy(child);
-        }
+            for (int i = 0; i < count; i++)
+            {
+                Transform child = PanelCard.transform.GetChild(i);
+                Debug.Log(child.name);
+                Destroy(child.GameObject()); 
+            }
 
-        
-
+        } 
         for (int i = 0; i < profile.getDeckCount; i++)
         {
             var color = CompareColor(profile.getDeck[i].color);
@@ -71,8 +85,7 @@ public class UiManager : MonoBehaviour
             var rank = profile.getDeck[i].rank;
 
             var prefab = PrefabsCard;
-            prefab.GetComponent<Image>().color = color;
-           // prefab.GetComponentInChildren<Image>().sprite = element;
+            prefab.GetComponent<Image>().color = color; 
             prefab.GetComponent<Transform>().Find("Element").GetComponent<Image>().sprite = element;
             
             if (number == 0)

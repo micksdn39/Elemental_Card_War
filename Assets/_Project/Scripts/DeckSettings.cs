@@ -26,8 +26,7 @@ public class DeckSettings : MonoBehaviour
                 list.Add(player.getDeck[i + 1]);
                 HighScore = value;
             } 
-        }
-         
+        } 
         return new (list,HighScore);
     }
     public bool WinCard(CardData card)
@@ -72,8 +71,8 @@ public class DeckSettings : MonoBehaviour
             return bonus;
         }
         bonus += BonusOneCardCal(cardA);
-        bonus += BonusElementWithPlayerAfterCalculate(cardA,element);
         bonus += BonusOneCardCal(cardB);
+        bonus += BonusElementWithPlayerAfterCalculate(cardA,element);
         bonus += BonusElementWithPlayerAfterCalculate(cardB,element);
         bonus += BonusTwoCardAfterCalculate(cardA, cardB);
 
@@ -87,57 +86,39 @@ public class DeckSettings : MonoBehaviour
         var cardRank = card.rank;
         var cardElement = card.element;
         var cardColor = card.color;
-
-        foreach (var element in Element)
+         
+        for (int i = 0; i < Element.Length; i++)
         {
-            if (cardElement == element)
+            if (cardElement == Element[i])
             {
-                foreach (var color in Color)
+                if (cardColor == Color[i])
                 {
-                    if (cardColor == color)
-                    {
-                        Bonus += cardNumber * 2;
-                    }
+                    Bonus += cardNumber * 2;
                 }
-
-            }
-
-        }
-
-        foreach (var rank in Rank)
-        {
-            if (cardRank == rank)
-            {
-                foreach (var element in Element)
-                {
-                    if (cardElement == element)
-                    {
-                        var bonus = 11 - cardNumber;
-                        Bonus += bonus;
-                        return Bonus;
-                    }
-
-                }
-
             }
         }
-
-        foreach (var rank in Rank)
+        for (int i = 0; i < Rank.Length; i++)
         {
-            if (cardRank == rank)
+            if (cardRank == Rank[i])
             {
-                foreach (var color in Color)
+                if (cardElement == Element[i])
                 {
-                    if (cardColor == color)
-                    {
-                        Bonus += cardNumber + 0.5f;
-                    }
+                    var bonus = 11 - cardNumber;
+                    Bonus += bonus;
+                    return Bonus;
                 }
-
             }
         }
-
-
+        for (int i = 0; i < Rank.Length; i++)
+        {
+            if (cardRank == Rank[i])
+            {
+                if (cardColor == Color[i])
+                {
+                    Bonus += cardNumber + 0.5f;
+                }
+            }
+        } 
         return Bonus;
     }
 
