@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class UiManager : MonoBehaviour
@@ -32,6 +33,7 @@ public class UiManager : MonoBehaviour
     private Sprite[] ElementImages;
 
     UnityEvent PlayTurn;
+    UnityEvent Drop;
 
     void Start()
     {
@@ -40,20 +42,20 @@ public class UiManager : MonoBehaviour
         ProfileImage.sprite = profileimage;
         LifePoint.text = profile.getLifePoint.ToString();
         Name.text = profile.PlayerName;
-        Elemental.text = profile.getElement;
+        
         BackCard();
     }
     public void OnEnable()
     {
         PlayTurn = GameObject.Find("GameManager").GetComponent<GameManager>().PlayTurnEvent;
         PlayTurn.AddListener(OpenCard);
-      //  GameManager.PlayTurnEvent.AddListener(OpenCard);
+        Drop = GameObject.Find("GameManager").GetComponent<GameManager>().DropEvent;
+        Drop.AddListener(OpenDropCard);
     }
     public void OnDisable()
     {
         PlayTurn.RemoveListener(OpenCard);
-       // GameObject.Find("GameManager").GetComponent<GameManager>().PlayTurnEvent.RemoveListener(OpenCard);
-      //  GameManager.PlayTurnEvent.RemoveListener(OpenCard);
+        Drop.RemoveListener(OpenDropCard); 
     }
 
     public void BackCard()
@@ -65,7 +67,9 @@ public class UiManager : MonoBehaviour
     }
     public void OpenCard()
     {
+
         Debug.Log(this.gameObject.name);
+        Elemental.text = profile.getElement;
         int count = PanelCard.transform.childCount;
         if( count > 0)
         {
@@ -98,7 +102,44 @@ public class UiManager : MonoBehaviour
             Instantiate(prefab, PanelCard);
         }
     }
+    public void OpenDropCard()
+    {
+        LifePoint.text = profile.getLifePoint.ToString();
+        Score.text = profile.getScore.ToString();
 
+        Debug.Log(this.gameObject.name);
+        int count = PanelDrop.transform.childCount;
+        if (count > 0)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                Transform child = PanelDrop.transform.GetChild(i);
+                Debug.Log(child.name);
+                Destroy(child.GameObject());
+            }
+
+        }
+        for (int i = 0; i < profile.getDropDeck.Count; i++)
+        {
+            var color = CompareColor(profile.getDropDeck[i].color);
+            var element = CompareElement(profile.getDropDeck[i].element);
+            var number = profile.getDropDeck[i].number;
+            var rank = profile.getDropDeck[i].rank;
+
+            var prefab = PrefabsCard;
+            prefab.GetComponent<Image>().color = color;
+            prefab.GetComponent<Transform>().Find("Element").GetComponent<Image>().sprite = element;
+
+            if (number == 0)
+            {
+                prefab.GetComponentInChildren<TextMeshProUGUI>().text = rank;
+            }
+            else
+                prefab.GetComponentInChildren<TextMeshProUGUI>().text = number.ToString();
+
+            Instantiate(prefab, PanelDrop);
+        }
+    }
     private Color CompareColor(string color)
     {
         if (color == "Red")

@@ -14,9 +14,15 @@ public class Player : Profile
         return false;
     }
     public void DrawCardMore(CardData card)
-    { 
-            DeckinHand.Add(card); 
-            LifePoint--; 
+    {
+        DeckinHand.Add(card);
+        LifePoint--;
+
+        SelectDropDeck.Clear(); 
+        selectCard(); 
+
+
     }
+   
 
 }

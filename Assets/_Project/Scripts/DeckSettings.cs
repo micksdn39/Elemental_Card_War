@@ -6,9 +6,9 @@ using UnityEngine;
 public class DeckSettings : MonoBehaviour
 { 
     public int NumberLength = 10;
-    public String[] Rank = { "F", "W", "E", "T", "B" };
-    public String[] Element = { "Fire", "Water", "Earth", "Thunder", "Dark" };
-    public String[] Color = { "Red", "Blue", "Brown", "Yellow", "Black" };
+    public String[] Rank = new string[] { "F", "W", "E", "T", "B" };
+    public String[] Element = new string[] { "Fire", "Water", "Earth", "Thunder", "Dark" };
+    public String[] Color = new string[] { "Red", "Blue", "Brown", "Yellow", "Black" };
     public int GetLengthElement { get { return Element.Length; } }
 
     public (List<CardData>,float) CompareHighScore(Profile player)
@@ -19,7 +19,7 @@ public class DeckSettings : MonoBehaviour
         for (int i = 0; i < player.getDeckCount-1; i++)
         {
            var value = CompareScore(player.getElement,player.getDeck[i], player.getDeck[i + 1]);
-            if (HighScore > value)
+            if (HighScore <= value)
             {
                 list.Clear();
                 list.Add(player.getDeck[i]);
@@ -33,43 +33,34 @@ public class DeckSettings : MonoBehaviour
     {
         var cardRank = card.rank;
         var cardElement = card.element;
-        var cardColor = card.color;
-
-        foreach (var rank in Rank)
+        var cardColor = card.color; 
+        for (int i = 0; i < Element.Length; i++)
         {
-            if (cardRank == rank)
+            if (cardElement == Element[i])
             {
-                foreach (var element in Element)
+                if (cardColor == Color[i])
                 {
-                    if (cardElement == element)
+                    if(cardRank == Rank[i])
                     {
-                        foreach (var color in Color)
-                        {
-                            if (cardColor == color)
-                            {
-                                return true;
-
-                            }
-                        }
-
+                        return true;
                     }
-
                 }
-
             }
         }
 
         return false;
     }
-    private float CompareScore(string element,CardData cardA, CardData cardB)
+    public float CompareScore(string element,CardData cardA, CardData cardB)
     {
         float bonus = 0;
-        if(WinCard(cardA)==true && WinCard(cardB)==true)
-        {
-            var score = cardA.number + cardB.number;
-            bonus -= score;
-            return bonus;
-        }
+        //if(WinCard(cardA)==true && WinCard(cardB)==true)
+        //{
+        //    var score = cardA.number + cardB.number;
+        //    bonus -= score;
+        //    return bonus;
+        //}
+        bonus += CardValueCal(cardA);
+        bonus += CardValueCal(cardB);
         bonus += BonusOneCardCal(cardA);
         bonus += BonusOneCardCal(cardB);
         bonus += BonusElementWithPlayerAfterCalculate(cardA,element);
@@ -78,7 +69,10 @@ public class DeckSettings : MonoBehaviour
 
         return bonus;
     }
-
+    private float CardValueCal(CardData card)
+    { 
+        return card.number;
+    }
     private float BonusOneCardCal(CardData card)
     {
         float Bonus = 0;

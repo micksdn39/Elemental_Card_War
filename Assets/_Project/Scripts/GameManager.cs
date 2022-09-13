@@ -7,9 +7,10 @@ public class GameManager : MonoBehaviour
 {
     public Player Player;
     public GameObject[] PlayerGroup;
-    public DeckData Deck; 
+    public DeckData Deck;
 
     public UnityEvent PlayTurnEvent;
+    public UnityEvent DropEvent;
     void Start()
     {
         if (PlayerGroup == null) { PlayerGroup = GameObject.FindGameObjectsWithTag("Player"); }
@@ -21,6 +22,10 @@ public class GameManager : MonoBehaviour
         if (PlayTurnEvent == null)
         {
             PlayTurnEvent = new UnityEvent();
+        }
+        if(DropEvent == null)
+        {
+            DropEvent = new UnityEvent();
         }
     }
     public void PlayTurn()
@@ -40,7 +45,27 @@ public class GameManager : MonoBehaviour
                 DealCard(player.GetComponent<Profile>());
             }
         }
+        
         PlayTurnEvent.Invoke();
+    }
+    public void EndTurn()
+    {
+        foreach (var player in PlayerGroup)
+        {
+            player.GetComponent<Profile>().ResetProfile();
+        }
+
+        PlayTurnEvent.Invoke();
+        DropEvent.Invoke();
+    }
+    public void DropCard()
+    {
+        foreach (var player in PlayerGroup)
+        {
+            player.GetComponent<Profile>().selectCard();
+            Debug.Log(player.name);
+        }
+        DropEvent.Invoke();
     }
     public void DrawCard(Player player)
     {
@@ -49,7 +74,9 @@ public class GameManager : MonoBehaviour
             Player.DrawCardMore(Deck.DealCardOnTop());
             Deck.RemoveCardOnTop();
         }
+
         PlayTurnEvent.Invoke();
+        DropEvent.Invoke();
     }
       
     private void DealCard(Profile player)
@@ -68,7 +95,7 @@ public class GameManager : MonoBehaviour
         {
             var DeckSettings = Deck.GetDeckSettings();
             var elementRandom = Random.Range(0, DeckSettings.GetLengthElement);
-            Debug.Log(elementRandom);
+           
             player.GetComponent<Profile>().getElement = DeckSettings.Element[elementRandom];
         }
 

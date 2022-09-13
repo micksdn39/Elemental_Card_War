@@ -1121,9 +1121,11 @@ MonoBehaviour:
   PlayerProfileImage: {fileID: 21300000, guid: 2f03b71b651d48e4fa5838395110532a, type: 3}
   LimitCardFirstDeal: 3
   LimitCardInHand: 3
+  Score: 0
   LifePoint: 4
   Element: 
   DeckinHand: []
+  SelectDropDeck: []
 --- !u!114 &357608898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1717,9 +1719,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1699386105}
-        m_TargetAssemblyTypeName: UiManager, Assembly-CSharp
-        m_MethodName: OpenCard
+      - m_Target: {fileID: 1151221888}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: DropCard
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2413,9 +2415,11 @@ MonoBehaviour:
   PlayerProfileImage: {fileID: 21300000, guid: fcb6f06a9b376d948a6467239751d9fe, type: 3}
   LimitCardFirstDeal: 3
   LimitCardInHand: 3
+  Score: 0
   LifePoint: 4
   Element: 
   DeckinHand: []
+  SelectDropDeck: []
 --- !u!1 &748047471
 GameObject:
   m_ObjectHideFlags: 0
@@ -2499,7 +2503,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 748047474}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1151221888}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: EndTurn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &748047474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2628,9 +2644,11 @@ MonoBehaviour:
   PlayerProfileImage: {fileID: 21300000, guid: 95fb5a3ce5a1b514ebff45f7ef1f3041, type: 3}
   LimitCardFirstDeal: 3
   LimitCardInHand: 3
+  Score: 0
   LifePoint: 4
   Element: 
   DeckinHand: []
+  SelectDropDeck: []
 --- !u!1 &806558892
 GameObject:
   m_ObjectHideFlags: 0
@@ -3949,9 +3967,11 @@ MonoBehaviour:
   PlayerProfileImage: {fileID: 21300000, guid: 0bb937b1b0f49db45adc442f9a2aa84f, type: 3}
   LimitCardFirstDeal: 3
   LimitCardInHand: 3
+  Score: 0
   LifePoint: 4
   Element: 
   DeckinHand: []
+  SelectDropDeck: []
 --- !u!1 &1065856148
 GameObject:
   m_ObjectHideFlags: 0
@@ -4098,9 +4118,11 @@ MonoBehaviour:
   PlayerProfileImage: {fileID: 21300000, guid: c83c9b9313530ae438221cb2925306e9, type: 3}
   LimitCardFirstDeal: 3
   LimitCardInHand: 3
+  Score: 0
   LifePoint: 4
   Element: 
   DeckinHand: []
+  SelectDropDeck: []
 --- !u!114 &1100146255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4367,6 +4389,9 @@ MonoBehaviour:
   PlayTurnEvent:
     m_PersistentCalls:
       m_Calls: []
+  DropEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1166597019
 GameObject:
   m_ObjectHideFlags: 0
@@ -4425,7 +4450,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Drop Card
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6052,9 +6077,11 @@ MonoBehaviour:
   PlayerProfileImage: {fileID: 21300000, guid: 864dd18fe5568c2409350eb0c280cf2c, type: 3}
   LimitCardFirstDeal: 5
   LimitCardInHand: 7
+  Score: 0
   LifePoint: 6
   Element: 
   DeckinHand: []
+  SelectDropDeck: []
 --- !u!1 &1712295394
 GameObject:
   m_ObjectHideFlags: 0
