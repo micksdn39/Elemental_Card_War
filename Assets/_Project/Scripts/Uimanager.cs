@@ -1,12 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class UiManager : MonoBehaviour
@@ -43,8 +38,7 @@ public class UiManager : MonoBehaviour
         ProfileImage.sprite = profileimage;
         LifePoint.text = profile.getLifePoint.ToString();
         Name.text = profile.PlayerName;
-
-        BackCard();
+         
     }
     public void OnEnable()
     {
@@ -61,14 +55,7 @@ public class UiManager : MonoBehaviour
         Drop.RemoveListener(OpenDropCard);
         Status.RemoveListener(UpdateStatus);
     }
-
-    public void BackCard()
-    {
-        for (int i = 0; i < profile.getDeckCount; i++)
-        {
-            Instantiate(PrefabsBackCard, PanelCard);
-        }
-    }
+ 
     private void UpdateStatus()
     {
         LifePoint.text = profile.getLifePoint.ToString();
@@ -77,56 +64,23 @@ public class UiManager : MonoBehaviour
     public void OpenCard()
     { 
         Elemental.text = profile.getElement;
-        int count = PanelCard.transform.childCount;
-        if( count > 0)
-        {
-            for (int i = 0; i < count; i++)
-            {
-                Transform child = PanelCard.transform.GetChild(i);
-               
-                Destroy(child.GameObject()); 
-            }
 
-        } 
-        for (int i = 0; i < profile.getDeckCount; i++)
-        {
-            var color = CompareColor(profile.getDeck[i].color);
-            var element = CompareElement(profile.getDeck[i].element);
-            var number = profile.getDeck[i].number;
-            var rank = profile.getDeck[i].rank;
-
-            var prefab = PrefabsCard;
-            prefab.GetComponent<Image>().color = color; 
-            prefab.GetComponent<Transform>().Find("Element").GetComponent<Image>().sprite = element;
-            
-            if (number == 0)
-            {
-                prefab.GetComponentInChildren<TextMeshProUGUI>().text = rank;
-            }
-            else
-                prefab.GetComponentInChildren<TextMeshProUGUI>().text = number.ToString();
-
-            Instantiate(prefab, PanelCard);
-        }
+        DestroyChildOBject(PanelCard);
+        InstandCardInHand(profile,PanelCard);
     }
     public void OpenDropCard()
-    {  
-        int count = PanelDrop.transform.childCount;
-        if (count > 0)
+    {
+        DestroyChildOBject(PanelDrop);
+        InstandCardDrop(profile, PanelDrop);
+    }
+    private void InstandCardInHand(Profile player, Transform panel)
+    {
+        for (int i = 0; i < player.getDeckCount; i++)
         {
-            for (int i = 0; i < count; i++)
-            {
-                Transform child = PanelDrop.transform.GetChild(i);
-                Destroy(child.GameObject());
-            }
-
-        }
-        for (int i = 0; i < profile.getDropDeck.Count; i++)
-        {
-            var color = CompareColor(profile.getDropDeck[i].color);
-            var element = CompareElement(profile.getDropDeck[i].element);
-            var number = profile.getDropDeck[i].number;
-            var rank = profile.getDropDeck[i].rank;
+            var color = CompareColor(player.getDeck[i].color);
+            var element = CompareElement(player.getDeck[i].element);
+            var number = player.getDeck[i].number;
+            var rank = player.getDeck[i].rank;
 
             var prefab = PrefabsCard;
             prefab.GetComponent<Image>().color = color;
@@ -139,7 +93,45 @@ public class UiManager : MonoBehaviour
             else
                 prefab.GetComponentInChildren<TextMeshProUGUI>().text = number.ToString();
 
-            Instantiate(prefab, PanelDrop);
+            Instantiate(prefab, panel);
+        }
+
+    }
+    private void InstandCardDrop(Profile player,Transform panel)
+    {
+        for (int i = 0; i < player.getDropDeck.Count; i++)
+        {
+            var color = CompareColor(player.getDropDeck[i].color);
+            var element = CompareElement(player.getDropDeck[i].element);
+            var number = player.getDropDeck[i].number;
+            var rank = player.getDropDeck[i].rank;
+
+            var prefab = PrefabsCard;
+            prefab.GetComponent<Image>().color = color;
+            prefab.GetComponent<Transform>().Find("Element").GetComponent<Image>().sprite = element;
+
+            if (number == 0)
+            {
+                prefab.GetComponentInChildren<TextMeshProUGUI>().text = rank;
+            }
+            else
+                prefab.GetComponentInChildren<TextMeshProUGUI>().text = number.ToString();
+
+            Instantiate(prefab, panel);
+        }
+
+    }
+    private void DestroyChildOBject(Transform objectTrans)
+    {
+        int count = objectTrans.transform.childCount;
+        if (count > 0)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                Transform child = objectTrans.transform.GetChild(i);
+                Destroy(child.GameObject());
+            }
+
         }
     }
     private Color CompareColor(string color)

@@ -774,7 +774,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1151221888}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: PlayerScoreCal
+        m_MethodName: ScoreCal
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1260,6 +1260,7 @@ MonoBehaviour:
   Element: 
   DeckinHand: []
   SelectDropDeck: []
+  winCard: 0
 --- !u!114 &357608898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2554,6 +2555,7 @@ MonoBehaviour:
   Element: 
   DeckinHand: []
   SelectDropDeck: []
+  winCard: 0
 --- !u!1 &748047471
 GameObject:
   m_ObjectHideFlags: 0
@@ -2783,6 +2785,7 @@ MonoBehaviour:
   Element: 
   DeckinHand: []
   SelectDropDeck: []
+  winCard: 0
 --- !u!1 &806558892
 GameObject:
   m_ObjectHideFlags: 0
@@ -4107,6 +4110,7 @@ MonoBehaviour:
   Element: 
   DeckinHand: []
   SelectDropDeck: []
+  winCard: 0
 --- !u!1 &1060342147
 GameObject:
   m_ObjectHideFlags: 0
@@ -4393,6 +4397,7 @@ MonoBehaviour:
   Element: 
   DeckinHand: []
   SelectDropDeck: []
+  winCard: 0
 --- !u!114 &1100146255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4660,6 +4665,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   DropEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  StatusEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1166597019
@@ -6352,6 +6360,7 @@ MonoBehaviour:
   Element: 
   DeckinHand: []
   SelectDropDeck: []
+  winCard: 0
 --- !u!1 &1712295394
 GameObject:
   m_ObjectHideFlags: 0

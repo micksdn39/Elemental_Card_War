@@ -1,16 +1,8 @@
-using System;
-using System.Linq;
-using System.Collections;
 using System.Collections.Generic; 
 using UnityEngine; 
 using Random = UnityEngine.Random;
 using System.IO;
-using UnityEngine.Playables;
 using Newtonsoft.Json;
-using System.Runtime.Serialization.Json;
-using Unity.VisualScripting;
-using static UnityEditor.Progress;
-using Unity.VisualScripting.FullSerializer;
 
 [System.Serializable]
 public class CardData
@@ -100,8 +92,7 @@ public class DeckData : MonoBehaviour
     }
     public void RemoveCardOnTop()
     { 
-        MyDeck.RemoveAt(0);
-
+        MyDeck.RemoveAt(0); 
         Save();
     }
 

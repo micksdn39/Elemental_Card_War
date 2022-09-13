@@ -40,9 +40,9 @@ public class GameManager : MonoBehaviour
         var cardfirstdeal = 0;
         foreach (var player in PlayerGroup)
         {
-            var highCardcandeal = player.GetComponent<Profile>().LimitCardFirstDeal;
-            if (cardfirstdeal < highCardcandeal)
-                cardfirstdeal = highCardcandeal;
+            var maxcardcandeal = player.GetComponent<Profile>().LimitCardFirstDeal;
+            if (cardfirstdeal < maxcardcandeal)
+                cardfirstdeal = maxcardcandeal;
         }
 
         for (int i = 0; i < cardfirstdeal; i++)
@@ -56,14 +56,10 @@ public class GameManager : MonoBehaviour
         PlayTurnEvent.Invoke();
         StatusEvent.Invoke();
     }
-    public void PlayerScoreCal()
-    {  
-        List<Profile> playergroup = new List<Profile>(); 
-        foreach (var player in PlayerGroup)
-        {
-            playergroup.Add(player.GetComponent<Profile>()) ;
-            
-        }
+    public void ScoreCal()
+    {
+        var playergroup = GetPlayerGroupList();
+
         var win = CheckWinCardOnPlayer(); 
         if (win.Count == 1)
         {
@@ -87,37 +83,42 @@ public class GameManager : MonoBehaviour
             StatusEvent.Invoke();
             return;
         }
-       
+        HighScorePlayer(); 
+    } 
 
-        var pyg = playergroup.OrderByDescending(x => x.getScore).ToList(); 
-        List<Profile> playerWin = new List<Profile>(); 
+    private void HighScorePlayer()
+    {
+        var playergroup = GetPlayerGroupList();
+        var pyg = playergroup.OrderByDescending(x => x.getScore).ToList();
+        List<Profile> playerWin = new List<Profile>();
 
         float bestScore = pyg[0].getScore;
         float lifepoint = 0;
         foreach (var py in pyg)
-        { 
-            if(py.getScore == bestScore)
+        {
+            if (py.getScore == bestScore)
             {
-                playerWin.Add(py); 
+                playerWin.Add(py);
             }
             else
             {
                 py.onLost();
-                if(py.getLifePoint<=0)
+                if (py.getLifePoint <= 0)
                 {
                     FindPlayerGroup();
                 }
                 lifepoint++;
             }
         }
-     
-        lifepoint = lifepoint/ playerWin.Count ;
+
+        lifepoint = lifepoint / playerWin.Count;
         foreach (var py in playerWin)
         {
             py.getLifePoint += lifepoint;
             Debug.Log(py.name + " Win !!");
         }
         StatusEvent.Invoke();
+
     }
 
     private bool CheckWinPlayer(Profile player)
@@ -138,9 +139,7 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-        }
-
-
+        } 
         return false;
     }
     private List<Profile> CheckWinCardOnPlayer()
@@ -172,12 +171,17 @@ public class GameManager : MonoBehaviour
 
         return playergroup;
     }
-     
-    private void FindPlayerGroup()
+
+    private List<Profile> GetPlayerGroupList()
     {
-       Array.Clear(PlayerGroup, 0, PlayerGroup.Length); 
-       PlayerGroup = GameObject.FindGameObjectsWithTag("Player"); 
+        List<Profile> playergroup = new List<Profile>();
+        foreach (var player in PlayerGroup)
+        {
+            playergroup.Add(player.GetComponent<Profile>());
+        }
+        return playergroup;
     }
+   
     public void EndTurn()
     {
         foreach (var player in PlayerGroup)
@@ -234,6 +238,10 @@ public class GameManager : MonoBehaviour
         }
 
     }
-     
+    private void FindPlayerGroup()
+    {
+        Array.Clear(PlayerGroup, 0, PlayerGroup.Length);
+        PlayerGroup = GameObject.FindGameObjectsWithTag("Player");
+    }
 
 }

@@ -51,9 +51,7 @@ public class Profile : MonoBehaviour
 
     public void selectCardScore()
     {
-        DeckSettings deck = new DeckSettings();
-
-      //  Score = deck.CompareScore(Element, SelectDropDeck[0], SelectDropDeck[1]); 
+        DeckSettings deck = new DeckSettings(); 
     }
 
     public void ResetProfile()
