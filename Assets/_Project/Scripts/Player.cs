@@ -19,8 +19,7 @@ public class Player : Profile
         LifePoint--;
 
         SelectDropDeck.Clear(); 
-        selectCard(); 
-
+        selectCard();  
 
     }
    

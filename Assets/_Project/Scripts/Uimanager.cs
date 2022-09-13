@@ -10,12 +10,12 @@ using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class UiManager : MonoBehaviour
-{ 
+{
     public Profile profile;
-     
-    public Image ProfileImage; 
-    public TextMeshProUGUI LifePoint; 
-    public TextMeshProUGUI Name; 
+
+    public Image ProfileImage;
+    public TextMeshProUGUI LifePoint;
+    public TextMeshProUGUI Name;
     public TextMeshProUGUI Elemental;
     public TextMeshProUGUI Score;
     public Transform PanelCard;
@@ -34,15 +34,16 @@ public class UiManager : MonoBehaviour
 
     UnityEvent PlayTurn;
     UnityEvent Drop;
+    UnityEvent Status;
 
     void Start()
     {
-        if(profile == null) { profile = this.GetComponent<Profile>(); } 
+        if (profile == null) { profile = this.GetComponent<Profile>(); }
         var profileimage = profile.PlayerProfileImage;
         ProfileImage.sprite = profileimage;
         LifePoint.text = profile.getLifePoint.ToString();
         Name.text = profile.PlayerName;
-        
+
         BackCard();
     }
     public void OnEnable()
@@ -51,24 +52,30 @@ public class UiManager : MonoBehaviour
         PlayTurn.AddListener(OpenCard);
         Drop = GameObject.Find("GameManager").GetComponent<GameManager>().DropEvent;
         Drop.AddListener(OpenDropCard);
+        Status = GameObject.Find("GameManager").GetComponent<GameManager>().StatusEvent;
+        Status.AddListener(UpdateStatus);
     }
     public void OnDisable()
     {
         PlayTurn.RemoveListener(OpenCard);
-        Drop.RemoveListener(OpenDropCard); 
+        Drop.RemoveListener(OpenDropCard);
+        Status.RemoveListener(UpdateStatus);
     }
 
     public void BackCard()
-    { 
+    {
         for (int i = 0; i < profile.getDeckCount; i++)
         {
             Instantiate(PrefabsBackCard, PanelCard);
         }
     }
-    public void OpenCard()
+    private void UpdateStatus()
     {
-
-        Debug.Log(this.gameObject.name);
+        LifePoint.text = profile.getLifePoint.ToString();
+        Score.text = profile.getScore.ToString(); 
+    }
+    public void OpenCard()
+    { 
         Elemental.text = profile.getElement;
         int count = PanelCard.transform.childCount;
         if( count > 0)
@@ -76,7 +83,7 @@ public class UiManager : MonoBehaviour
             for (int i = 0; i < count; i++)
             {
                 Transform child = PanelCard.transform.GetChild(i);
-                Debug.Log(child.name);
+               
                 Destroy(child.GameObject()); 
             }
 
@@ -103,18 +110,13 @@ public class UiManager : MonoBehaviour
         }
     }
     public void OpenDropCard()
-    {
-        LifePoint.text = profile.getLifePoint.ToString();
-        Score.text = profile.getScore.ToString();
-
-        Debug.Log(this.gameObject.name);
+    {  
         int count = PanelDrop.transform.childCount;
         if (count > 0)
         {
             for (int i = 0; i < count; i++)
             {
                 Transform child = PanelDrop.transform.GetChild(i);
-                Debug.Log(child.name);
                 Destroy(child.GameObject());
             }
 

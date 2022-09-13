@@ -33,17 +33,27 @@ public class Profile : MonoBehaviour
     protected List<CardData> SelectDropDeck = new List<CardData>();
     public List<CardData> getDropDeck { get { return SelectDropDeck; } }
 
+    public bool winCard = false;
     public void addCard(CardData card)
     {  
             DeckinHand.Add(card); 
+    } 
+    public void onLost()
+    {
+        LifePoint -= 1;
+        if(LifePoint<=0)
+        {
+            ResetProfile();
+            this.tag = "Lost";
+            Debug.Log("Player " + name + " Exit Game");
+        }
     }
 
     public void selectCardScore()
     {
         DeckSettings deck = new DeckSettings();
 
-      //  Score = deck.CompareScore(Element, SelectDropDeck[0], SelectDropDeck[1]);
-
+      //  Score = deck.CompareScore(Element, SelectDropDeck[0], SelectDropDeck[1]); 
     }
 
     public void ResetProfile()
@@ -53,8 +63,7 @@ public class Profile : MonoBehaviour
         SelectDropDeck.Clear();
     }
     public void selectCard()
-    {
-        Debug.Log(this.name + " select");
+    { 
         SelectDropDeck = MySelect(2);
         selectCardScore();
     }
@@ -63,9 +72,7 @@ public class Profile : MonoBehaviour
     {
         var select = new List<CardData>();
         if (CheckWinCardList().Count >= Card && (CheckWinCardList().Count == (DeckinHand.Count -1)))
-        {
-            Debug.Log(" CheckWinCardList == inhand ");
-
+        { 
             for (int i = 0; i < DeckinHand.Count; i++)
             {
                 select.Add(DeckinHand[i]);
@@ -74,18 +81,17 @@ public class Profile : MonoBehaviour
                     break;
                 }
             }
+            winCard = true;
             return select;
         }
         
         if (CheckWinCardList().Count > 1)
-        {
-            Debug.Log(" CheckWinCardList > 1 ");
+        { 
             for (int j = 0; j < DeckinHand.Count; j++)
             {
                 if (CheckWinCard(DeckinHand[j]) == true)
                 {
-                    select.Add(DeckinHand[j]);
-                  
+                    select.Add(DeckinHand[j]); 
                 }
             }
             for (int i = 0; i < Card - 1; i++)
@@ -99,11 +105,11 @@ public class Profile : MonoBehaviour
                     }
                 }
             }
+            winCard = true;
             return select;
         }
         if (CheckWinCardList().Count == 1)
-        {
-            Debug.Log(" CheckWinCardList == 1 ");
+        { 
             for (int j = 0; j < DeckinHand.Count; j++)
             {
                 if (CheckWinCard(DeckinHand[j]) == true)
@@ -112,22 +118,25 @@ public class Profile : MonoBehaviour
                     break;
                 }
             }
-            for (int i = 0; i < (Card-1); i++)
+            for (int i = 0; i < DeckinHand.Count; i++)
             {
                 if (CheckWinCard(DeckinHand[i]) == false)
                 {
                     select.Add(DeckinHand[i]);
                 }
-                else
-                    i--;
+                if(select.Count >= Card)
+                {
+                    break;
+                }
+                    
             }
+            winCard = true;
             return select; 
         }
 
         DeckSettings deck = new DeckSettings();
         select = deck.CompareHighScore(this).Item1;
-        Score = deck.CompareHighScore(this).Item2;
-        Debug.Log(this.name+" select " + deck.CompareHighScore(this).Item1.Count);
+        Score = deck.CompareHighScore(this).Item2; 
         return select;
     }
 

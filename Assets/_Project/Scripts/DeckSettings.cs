@@ -52,15 +52,7 @@ public class DeckSettings : MonoBehaviour
     }
     public float CompareScore(string element,CardData cardA, CardData cardB)
     {
-        float bonus = 0;
-        //if(WinCard(cardA)==true && WinCard(cardB)==true)
-        //{
-        //    var score = cardA.number + cardB.number;
-        //    bonus -= score;
-        //    return bonus;
-        //}
-        bonus += CardValueCal(cardA);
-        bonus += CardValueCal(cardB);
+        float bonus = 0;  
         bonus += BonusOneCardCal(cardA);
         bonus += BonusOneCardCal(cardB);
         bonus += BonusElementWithPlayerAfterCalculate(cardA,element);
@@ -75,6 +67,10 @@ public class DeckSettings : MonoBehaviour
     }
     private float BonusOneCardCal(CardData card)
     {
+        if (WinCard(card) == true)
+        {
+            return 0;
+        } 
         float Bonus = 0;
         var cardNumber = card.number;
         var cardRank = card.rank;
@@ -118,6 +114,10 @@ public class DeckSettings : MonoBehaviour
 
     private float BonusElementWithPlayerAfterCalculate(CardData card, string player)
     {
+        if (WinCard(card) == true)
+        {
+            return 0;
+        }
         if (player == card.element)
         {
             return 0.5f;
@@ -128,6 +128,11 @@ public class DeckSettings : MonoBehaviour
 
     private float BonusTwoCardAfterCalculate(CardData cardA, CardData cardB)
     {
+        if (WinCard(cardA) == true || WinCard(cardB) == true)
+        {
+            return 0;
+        }
+
         float bonus = 0;
         if (cardA.element == cardB.element)
         {
@@ -141,7 +146,7 @@ public class DeckSettings : MonoBehaviour
         {
             bonus += 0.5f;
         }
-        return 0;
+        return bonus;
     }
      
   
